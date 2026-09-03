@@ -1,6 +1,4 @@
-😂 Aree haan yaar. **No fancy formatting UI, no extra bakchodi — just one clean block you can copy-paste directly into `README.md`.**
 
-````markdown
 # Smart Enterprise Logistics & Order Processing System (SELMS)
 
 > An enterprise logistics management platform built with Java and Spring Boot to optimize order processing, warehouse allocation, inventory management, and delivery route optimization using Data Structures and Algorithms.
@@ -411,14 +409,5 @@ Planned improvements include:
 
 This project is intended for educational and demonstration purposes.
 
-````
 
-After pasting and saving, run:
 
-```bash
-
-git commit -m "Update README with live deployment"
-git push
-````
-
-Then **refresh GitHub** and your README will be updated. 🔥
