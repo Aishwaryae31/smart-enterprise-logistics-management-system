@@ -404,6 +404,47 @@ Planned improvements include:
 * GitHub Repository: [https://github.com/Aishwaryae31/smart-enterprise-logistics-management-system](https://github.com/Aishwaryae31/smart-enterprise-logistics-management-system)
 
 ---
+# 📸 Screenshots
+
+## Operations Dashboard
+
+The main dashboard provides an overview of orders, delivery costs, warehouse stock, and recent logistics activity.
+
+![SELMS Dashboard](screenshots/dashboard.png)
+
+---
+
+## Inventory Management
+
+The inventory module provides a warehouse-wise stock view using TreeMap-based sorted inventory management.
+
+![Inventory Management](screenshots/inventory.png)
+
+---
+
+## Order Processing
+
+Orders can be created with different priority levels. The system processes orders using a priority queue with the following order:
+
+PREMIUM > URGENT > NORMAL
+
+![Place New Order](screenshots/place-order.png)
+
+---
+
+## Route Optimization
+
+The route optimization module represents the logistics network as a graph and uses Dijkstra's Algorithm to calculate the shortest delivery route.
+
+![Route Optimization](screenshots/route-optimization.png)
+
+---
+
+## Delivery Tracking
+
+The delivery tracking module manages shipments through a FIFO-based processing pipeline and provides real-time order status information.
+
+![Delivery Tracking](screenshots/delivery-tracking.png)
 
 ## 📄 License
 
