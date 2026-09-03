@@ -1,222 +1,371 @@
-# Buffer-7.0
+😂 Aree haan yaar. **No fancy formatting UI, no extra bakchodi — just one clean block you can copy-paste directly into `README.md`.**
+
+````markdown
 # Smart Enterprise Logistics & Order Processing System (SELMS)
+
+> An enterprise logistics management platform built with Java and Spring Boot to optimize order processing, warehouse allocation, inventory management, and delivery route optimization using Data Structures and Algorithms.
+
+## 🚀 Live Demo
+
+[🌐 Launch SELMS](https://selms-727f0.containers.snapdeploy.app/#dashboard)
+
+The application is publicly deployed and accessible through the live demo above.
+
+---
 
 ## 📌 Project Overview
 
-Smart Enterprise Logistics & Order Processing System (SELMS) is an enterprise-level logistics management platform designed to optimize order processing, warehouse allocation, inventory management, and delivery route optimization using advanced Data Structures and Algorithms.
+Smart Enterprise Logistics & Order Processing System (SELMS) is an enterprise-level logistics management platform designed to optimize:
 
-This system simulates real-world logistics platforms like Amazon, Flipkart, and DHL.
+- Order processing
+- Warehouse allocation
+- Inventory management
+- Delivery route optimization
+- Delivery tracking
+- Dashboard analytics
 
----
+The system simulates real-world logistics workflows similar to large-scale e-commerce and courier platforms such as Amazon, Flipkart, and DHL.
 
-## 🏷 Domain
-
-**Enterprise Systems & Process Optimization**
-
-This project focuses on optimizing enterprise-level logistics operations by automating:
-
-* Order prioritization
-* Warehouse allocation
-* Inventory management
-* Delivery route optimization
-* Real-time tracking and analytics
-
-It improves operational efficiency, reduces delivery costs, and enhances customer satisfaction in large-scale enterprise systems.
+SELMS combines a Spring Boot backend with a Thymeleaf-based web interface and uses various Data Structures and Algorithms to efficiently model logistics operations.
 
 ---
 
-## 🎯 Features
+## 🏷️ Domain
 
-* Add and manage customers dynamically
-* Add and manage products dynamically
-* Place new orders with priority levels
-* Process PREMIUM orders before URGENT and NORMAL
-* Select optimal warehouse based on stock and shortest delivery route
-* Real-time inventory tracking and updates
-* Delivery tracking pipeline
-* Route optimization using Dijkstra’s Algorithm
-* Warehouse inventory display using BST (TreeMap)
-* Dashboard analytics and performance visualization
+### Enterprise Systems & Process Optimization
 
----
+The project focuses on optimizing enterprise-level logistics operations by automating:
 
-## 🧠 Data Structures & Algorithms Used
+- Order prioritization
+- Warehouse allocation
+- Inventory management
+- Delivery route optimization
+- Delivery processing
+- Real-time tracking and analytics
 
-### 1. HashMap
-
-Used for:
-
-* Fast customer lookup
-* Fast warehouse lookup
-* City mapping
-
-**Time Complexity:** O(1)
+The system aims to improve operational efficiency, reduce delivery costs, and enhance customer satisfaction in large-scale enterprise logistics environments.
 
 ---
 
-### 2. Priority Queue (Heap)
+## ✨ Key Features
 
-Used for:
+### 👥 Customer Management
 
-* Processing high-priority orders first
+- Add and manage customers dynamically
+- Fast customer lookup
+
+### 📦 Product & Inventory Management
+
+- Add and manage products
+- Track inventory levels
+- Update inventory dynamically
+- Display warehouse inventory in sorted order
+
+### 🚨 Priority-Based Order Processing
+
+- Place new orders with priority levels
+- Process orders based on priority
 
 Priority order:
 
 PREMIUM > URGENT > NORMAL
 
-**Time Complexity:** O(log n)
+### 🏭 Warehouse Allocation
+
+- Select an optimal warehouse based on:
+  - Product availability
+  - Inventory
+  - Delivery route
+
+### 🚚 Delivery Processing
+
+- Delivery processing pipeline
+- FIFO-based delivery management
+- Shipment tracking
+
+### 🗺️ Route Optimization
+
+- Transportation network represented using a Graph
+- Shortest / cheapest delivery route calculated using Dijkstra's Algorithm
+
+### 📊 Dashboard & Analytics
+
+- Dashboard overview
+- Logistics performance visualization
+- Operational insights
 
 ---
 
-### 3. Graph (Adjacency List)
+# 🧠 Data Structures & Algorithms
+
+SELMS uses multiple Data Structures and Algorithms to model real-world logistics operations efficiently.
+
+## 1. HashMap
 
 Used for:
 
-* Representing transportation network between cities
+- Fast customer lookup
+- Fast warehouse lookup
+- City mapping
 
-**Time Complexity:** O(V + E)
+Time Complexity: O(1)
 
 ---
 
-### 4. Dijkstra’s Algorithm
+## 2. Priority Queue (Heap)
 
 Used for:
 
-* Finding shortest / cheapest delivery route
+- Processing high-priority orders first
 
-**Time Complexity:** O((V + E) log V)
+Priority order:
+
+PREMIUM > URGENT > NORMAL
+
+Time Complexity: O(log n)
 
 ---
 
-### 5. TreeMap (BST / Red-Black Tree)
+## 3. Graph (Adjacency List)
 
 Used for:
 
-* Inventory management in sorted order
-* Range queries on products
+- Representing the transportation network between cities
+- Modeling connections between logistics locations
 
-**Time Complexity:** O(log n)
+Time Complexity: O(V + E)
 
 ---
 
-### 6. Queue (FIFO)
+## 4. Dijkstra's Algorithm
 
 Used for:
 
-* Delivery processing pipeline
+- Finding the shortest delivery route
+- Finding the cheapest delivery route
 
-**Time Complexity:** O(1)
-
----
-
-## ⚙️ Tech Stack
-
-### Frontend
-
-* HTML
-* CSS
-* JavaScript
-
-### Backend
-
-* Java
-* Spring Boot
-* Thymeleaf
-
-### Build Tool
-
-* Maven
+Time Complexity: O((V + E) log V)
 
 ---
 
-## 📂 Project Structure
+## 5. TreeMap (BST / Red-Black Tree)
 
-```bash
-SELMS/
+Used for:
+
+- Maintaining inventory in sorted order
+- Performing range-based product queries
+
+Time Complexity: O(log n)
+
+---
+
+## 6. Queue (FIFO)
+
+Used for:
+
+- Managing the delivery processing pipeline
+- Maintaining first-in-first-out delivery processing
+
+Time Complexity: O(1)
+
+---
+
+# ⚙️ Tech Stack
+
+## Frontend
+
+- HTML
+- CSS
+- JavaScript
+- Thymeleaf
+
+## Backend
+
+- Java 17
+- Spring Boot
+
+## Build Tool
+
+- Maven
+
+## Deployment & DevOps
+
+- Docker
+- GitHub
+- SnapDeploy
+
+---
+
+# 📂 Project Structure
+
+```text
+smart-enterprise-logistics-management-system/
 │
 ├── src/
-│   ├── main/
-│   │   ├── java/com/example/selms/
-│   │   │   ├── SelmsApplication.java
-│   │   │   ├── HomeController.java
-│   │   │   └── SmartLogisticsSystem.java
-│   │   │
-│   │   └── resources/
-│   │       ├── static/
-│   │       │   ├── css/
-│   │       │   └── js/
-│   │       │
-│   │       └── templates/
-│   │           └── index.html
+│   └── main/
+│       ├── java/
+│       │   └── com/example/selms/
+│       │       ├── SelmsApplication.java
+│       │       ├── HomeController.java
+│       │       └── SmartLogisticsSystem.java
+│       │
+│       └── resources/
+│           ├── static/
+│           │   ├── css/
+│           │   └── js/
+│           │
+│           ├── templates/
+│           │   └── index.html
+│           │
+│           └── application.properties
 │
+├── .gitignore
+├── Dockerfile
 ├── pom.xml
 └── README.md
+````
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+Make sure the following are installed:
+
+* Java 17
+* Maven
+* Git
+
+For Docker:
+
+* Docker
+
+---
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/Aishwaryae31/smart-enterprise-logistics-management-system.git
+```
+
+Navigate into the project:
+
+```bash
+cd smart-enterprise-logistics-management-system
 ```
 
 ---
 
-## 🚀 How to Run the Project
-
-### Step 1: Clone Repository
+## 2. Build the Project
 
 ```bash
-git clone <repository-link>
-cd SELMS
+mvn clean package
 ```
 
-### Step 2: Install Dependencies
+To skip tests:
 
 ```bash
-mvn clean install
+mvn clean package -DskipTests
 ```
 
-### Step 3: Run Application
+The executable Spring Boot JAR will be generated inside the target directory.
+
+---
+
+## 3. Run the Application
 
 ```bash
 mvn spring-boot:run
 ```
 
-### Step 4: Open Browser
+The application will start on the configured local port.
+
+Open in your browser:
+
+[http://localhost:8081](http://localhost:8081)
+
+---
+
+# 🐳 Running with Docker
+
+## 1. Build the Docker Image
 
 ```bash
-http://localhost:8081
+docker build -t selms .
 ```
 
-(or the configured port)
+## 2. Run the Container
+
+```bash
+docker run -p 8080:8080 selms
+```
+
+The application will then be available at:
+
+[http://localhost:8080](http://localhost:8080)
 
 ---
 
-## 📊 Complexity Analysis
+# ☁️ Deployment
 
-| Operation        | Complexity     |
-| ---------------- | -------------- |
-| Customer Lookup  | O(1)           |
-| Warehouse Lookup | O(1)           |
-| Order Insert     | O(log n)       |
-| Order Process    | O(log n)       |
-| Inventory Update | O(log n)       |
-| Shortest Path    | O((V+E) log V) |
+SELMS is containerized using Docker and deployed as a public web service using SnapDeploy.
+
+### Deployment Pipeline
+
+```text
+GitHub Repository
+       ↓
+   Dockerfile
+       ↓
+ Docker Build
+       ↓
+ Spring Boot JAR
+       ↓
+   SnapDeploy
+       ↓
+ Public Web Application
+```
+
+### Live Application
+
+[🌐 Open SELMS](https://selms-727f0.containers.snapdeploy.app/#dashboard)
 
 ---
 
-## 🌍 Real World Relevance
+# 📊 Complexity Analysis
 
-This project can be used in:
+| Operation        |       Complexity |
+| ---------------- | ---------------: |
+| Customer Lookup  |             O(1) |
+| Warehouse Lookup |             O(1) |
+| Order Insert     |         O(log n) |
+| Order Process    |         O(log n) |
+| Inventory Update |         O(log n) |
+| Shortest Path    | O((V + E) log V) |
+
+---
+
+# 🌍 Real-World Applications
+
+SELMS can be applied to:
 
 * E-commerce logistics
 * Warehouse management systems
 * Supply chain optimization
-* Courier / delivery services
+* Courier and delivery services
 
-Examples:
+### Example Use Cases
 
-* Amazon
-* Flipkart
-* DHL
+* Order prioritization in e-commerce
+* Warehouse inventory management
+* Delivery route optimization
+* Shipment processing
+* Logistics performance monitoring
 
 ---
 
-## 👨‍💻 Team Members
+# 👨‍💻 Team Members
 
 * Aabha Joshi
 * Aishwarya Marshettiwar
@@ -224,10 +373,52 @@ Examples:
 
 ---
 
-## 📌 Future Enhancements
+# 📌 Future Enhancements
 
-* Database integration (MySQL / MongoDB)
+Planned improvements include:
+
+* Database integration using MySQL / MongoDB
 * Real-time order notifications
 * AI-based delivery prediction
-* Secure login/authentication
+* Secure login and authentication
 * Live map API integration
+
+---
+
+# ⭐ Project Highlights
+
+* Enterprise-oriented logistics workflow
+* Multiple Data Structures and Algorithms
+* Priority-based order processing
+* Graph-based route optimization
+* Dijkstra's shortest-path algorithm
+* Dynamic inventory management
+* Spring Boot backend
+* Thymeleaf web interface
+* Dockerized application
+* Public cloud deployment
+
+---
+
+# 🔗 Links
+
+* Live Demo: [https://selms-727f0.containers.snapdeploy.app/#dashboard](https://selms-727f0.containers.snapdeploy.app/#dashboard)
+* GitHub Repository: [https://github.com/Aishwaryae31/smart-enterprise-logistics-management-system](https://github.com/Aishwaryae31/smart-enterprise-logistics-management-system)
+
+---
+
+## 📄 License
+
+This project is intended for educational and demonstration purposes.
+
+````
+
+After pasting and saving, run:
+
+```bash
+
+git commit -m "Update README with live deployment"
+git push
+````
+
+Then **refresh GitHub** and your README will be updated. 🔥
