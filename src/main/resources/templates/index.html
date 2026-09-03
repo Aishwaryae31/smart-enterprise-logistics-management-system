@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SELMS — Smart Enterprise Logistics</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}" href="../static/css/main.css" />
+  <!-- Favicon as inline SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23f59e0b'/%3E%3Cpath d='M8 10h16M8 16h10M8 22h13' stroke='%230d1629' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     SIDEBAR
+═══════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+        <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+    </div>
+    <div class="sidebar-logo-text">
+      <span class="sidebar-logo-name">SELMS</span>
+      <span class="sidebar-logo-sub">Logistics Platform</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+
+    <span class="nav-section-label">Core</span>
+
+    <div class="nav-item active" data-page="dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      <span>Dashboard</span>
+    </div>
+
+    <div class="nav-item" data-page="place-order">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      <span>Place Order</span>
+    </div>
+
+    <div class="nav-item" data-page="inventory">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+      </svg>
+      <span>Inventory</span>
+    </div>
+
+    <span class="nav-section-label">Deliveries</span>
+
+    <div class="nav-item" data-page="tracking">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+      <span>Tracking</span>
+      <span class="nav-badge">7</span>
+    </div>
+
+    <div class="nav-item" data-page="routes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      <span>Route Optimization</span>
+    </div>
+
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="user-avatar">AK</div>
+      <div class="user-info">
+        <div class="user-name">Aabha Joshi</div>
+        <div class="user-role">Admin</div>
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════
+     MAIN WRAPPER
+═══════════════════════════════════════════════════════ -->
+<div class="main-wrapper">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-breadcrumb" id="breadcrumb">
+      <span class="breadcrumb-current">Dashboard</span>
+    </div>
+
+    <div class="topbar-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" placeholder="Search orders, products…" id="global-search" />
+    </div>
+
+    <div class="topbar-actions">
+      <button class="topbar-btn" title="Refresh">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+      </button>
+      <button class="topbar-btn" title="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="notif-dot"></span>
+      </button>
+
+      <div class="topbar-divider"></div>
+
+      <div class="topbar-user">
+        <div class="topbar-avatar">AK</div>
+        <span class="topbar-user-name">Aabha J.</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════
+       PAGE: DASHBOARD
+  ════════════════════════════════════════════ -->
+  <main class="page-content active" id="page-dashboard">
+
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">Operations Dashboard</h2>
+        <p class="page-subtitle" th:text="${'Last updated: ' + #dates.format(#dates.createNow(), 'dd MMM yyyy, HH:mm')}">Last updated: 10 Jul 2025, 14:30</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-outline btn-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+        </button>
+        <button class="btn btn-amber btn-sm" onclick="SELMS.nav.navigate('place-order')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Order
+        </button>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="stat-grid">
+      <div class="stat-card amber">
+        <div class="stat-icon amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+        <div class="stat-value" id="stat-total" th:text="${stats.totalOrders}">0</div>
+        <div class="stat-label">Total Orders</div>
+        <div class="stat-change up">↑ 12% this week</div>
+      </div>
+
+      <div class="stat-card blue">
+        <div class="stat-icon blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="stat-value" id="stat-pending" th:text="${stats.pendingOrders}">0</div>
+        <div class="stat-label">Pending Orders</div>
+        <div class="stat-change neutral">In queue</div>
+      </div>
+
+      <div class="stat-card emerald">
+        <div class="stat-icon emerald">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <div class="stat-value" id="stat-delivered" th:text="${stats.deliveredOrders}">0</div>
+        <div class="stat-label">Delivered</div>
+        <div class="stat-change up">↑ 8% vs last week</div>
+      </div>
+
+      <div class="stat-card rose">
+        <div class="stat-icon rose">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div class="stat-value" id="stat-failed" th:text="${stats.failedOrders}">0</div>
+        <div class="stat-label">Failed Orders</div>
+        <div class="stat-change down">↓ 3 from last week</div>
+      </div>
+    </div>
+
+    <!-- Charts + Warehouse Row -->
+    <div class="grid-7-5 mb-24">
+
+      <!-- Delivery Cost Chart -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/>
+            </svg>
+            Delivery Costs — This Week
+          </span>
+          <span class="card-action">Weekly ›</span>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px">
+            <span style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700;color:var(--navy-900)">₹3,720</span>
+            <span class="stat-change up" style="margin-top:0">↑ 6.2%</span>
+          </div>
+          <div class="chart-area" id="cost-chart">
+            <!-- JS rendered -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Warehouse Performance -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+            Warehouse Stock
+          </span>
+          <span class="card-action" onclick="SELMS.nav.navigate('inventory')">View All ›</span>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Warehouse</th>
+                <th>Stock Level</th>
+                <th>SKUs</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="warehouse-perf-body">
+              <!-- JS rendered -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Recent Orders Table -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Recent Orders
+        </span>
+        <span class="card-action" onclick="SELMS.nav.navigate('tracking')">All Orders ›</span>
+      </div>
+      <div style="padding:12px 20px;border-bottom:1px solid var(--slate-100);display:flex;gap:8px;align-items:center">
+        <div class="topbar-search" style="width:220px;background:var(--slate-50)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" placeholder="Filter orders…" id="dashboard-order-filter" />
+        </div>
+      </div>
+      <div class="table-wrapper" style="border:none;border-radius:0;box-shadow:none">
+        <table class="data-table" id="recent-orders-table">
+          <thead>
+            <tr>
+              <th data-sort>Order ID <span class="sort-icon">↕</span></th>
+              <th data-sort>Customer <span class="sort-icon">↕</span></th>
+              <th data-sort>Product <span class="sort-icon">↕</span></th>
+              <th data-sort>Qty <span class="sort-icon">↕</span></th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th data-sort>Cost <span class="sort-icon">↕</span></th>
+              <th data-sort>Date <span class="sort-icon">↕</span></th>
+            </tr>
+          </thead>
+          <tbody id="recent-orders-body">
+            <!-- JS rendered -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════
+       PAGE: PLACE ORDER
+  ════════════════════════════════════════════ -->
+  <main class="page-content" id="page-place-order">
+
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">Place New Order</h2>
+        <p class="page-subtitle">Orders are queued by priority: PREMIUM → URGENT → NORMAL</p>
+      </div>
+    </div>
+
+    <div class="grid-2-1">
+
+      <!-- Form Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Order Details
+          </span>
+        </div>
+        <div class="card-body">
+          <form id="order-form" onsubmit="return false">
+            <div class="form-grid">
+
+              <div class="form-group form-full">
+              <label class="form-label" for="order-customer">Customer <span class="required">*</span></label>
+    <select class="form-control" id="order-customer" required>
+        <option value="" disabled selected>Select customer…</option>
+        <option th:each="c : ${customers}" th:value="${c.id}" th:text="${c.name + ' (' + c.city + ')'}"></option>
+    </select>
+
+    <button type="button" class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="openCustomerModal()">
+        + Add Customer
+    </button>
+</div>
+
+              <div class="form-group">
+    <label class="form-label" for="order-product">Product <span class="required">*</span></label>
+    <select class="form-control" id="order-product" required>
+        <option value="" disabled selected>Select product…</option>
+        <option th:each="p : ${products}" th:value="${p}" th:text="${p}"></option>
+    </select>
+
+    <button type="button" class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="openProductModal()">
+        + Add Product
+    </button>
+</div>
+
+              <div class="form-group">
+                <label class="form-label" for="order-qty">Quantity <span class="required">*</span></label>
+                <input class="form-control" id="order-qty" type="number" min="1" max="100" placeholder="e.g. 2" required th:value="${orderQty}" />
+                <span class="form-hint">Max 100 units per order</span>
+              </div>
+
+              <div class="form-group form-full">
+                <label class="form-label">Priority <span class="required">*</span></label>
+                <div class="priority-selector">
+                  <div class="priority-option normal">
+                    <input type="radio" name="priority" id="p-normal" value="NORMAL" checked />
+                    <label for="p-normal">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                      </svg>
+                      Normal
+                    </label>
+                  </div>
+                  <div class="priority-option urgent">
+                    <input type="radio" name="priority" id="p-urgent" value="URGENT" />
+                    <label for="p-urgent">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                      </svg>
+                      Urgent
+                    </label>
+                  </div>
+                  <div class="priority-option premium">
+                    <input type="radio" name="priority" id="p-premium" value="PREMIUM" />
+                    <label for="p-premium">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                      </svg>
+                      Premium
+                    </label>
+                  </div>
+                </div>
+                <div id="priority-preview" style="margin-top:10px;min-height:40px"></div>
+              </div>
+
+              <div class="form-group form-full">
+                <label class="form-label" for="order-notes">Notes <span style="color:var(--slate-400);font-weight:400">(optional)</span></label>
+                <textarea class="form-control" id="order-notes" rows="3" placeholder="Special handling instructions, delivery instructions…" th:text="${orderNotes}"></textarea>
+              </div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px">
+              <button type="button" class="btn btn-outline" onclick="document.getElementById('order-form').reset();document.getElementById('priority-preview').innerHTML=''">
+                Clear
+              </button>
+              <button type="submit" class="btn btn-amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+                  <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+                Place Order
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- Side panel -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+
+        <!-- Order Confirmation (hidden until submit) -->
+        <div class="card" id="order-confirm" style="display:none;border:1.5px solid var(--emerald-500)">
+          <div class="card-header" style="border-bottom-color:var(--emerald-100)">
+            <span class="card-title" style="color:var(--emerald-500)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              Order Confirmed
+            </span>
+          </div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;font-size:0.82rem">
+              <span style="color:var(--slate-400)">Order ID</span>
+              <span class="table-order-id" id="conf-order-id">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.82rem">
+              <span style="color:var(--slate-400)">Product</span>
+              <span style="font-weight:600" id="conf-product">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.82rem">
+              <span style="color:var(--slate-400)">Quantity</span>
+              <span style="font-weight:600" id="conf-qty">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.82rem">
+              <span style="color:var(--slate-400)">Priority</span>
+              <span id="conf-priority">—</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.82rem">
+              <span style="color:var(--slate-400)">Customer</span>
+              <span style="font-weight:600" id="conf-customer">—</span>
+            </div>
+            <div class="divider" style="margin:4px 0"></div>
+            <button class="btn btn-outline btn-sm" onclick="SELMS.nav.navigate('tracking')">
+              View in Tracking ›
+            </button>
+          </div>
+        </div>
+
+        <!-- System info card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              Processing Info
+            </span>
+          </div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:0.78rem;font-weight:600;color:var(--navy-800)">Priority Queue</div>
+              <p>Orders are processed using a max-heap priority queue. PREMIUM orders are dispatched first.</p>
+            </div>
+            <div class="divider"></div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:0.78rem;font-weight:600;color:var(--navy-800)">Warehouse Selection</div>
+              <p>Dijkstra's algorithm finds the nearest warehouse with sufficient stock for each order.</p>
+            </div>
+            <div class="divider"></div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:0.78rem;font-weight:600;color:var(--navy-800)">Inventory Update</div>
+              <p>Stock levels are updated in O(log n) via TreeMap (Red-Black BST) after each dispatch.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════
+       PAGE: INVENTORY
+  ════════════════════════════════════════════ -->
+  <main class="page-content" id="page-inventory">
+
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">Inventory Management</h2>
+        <p class="page-subtitle">BST-sorted (TreeMap) stock view across all warehouse nodes</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-outline btn-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+            <line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/>
+            <line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/>
+          </svg>
+          BST Sort
+        </button>
+        <button class="btn btn-amber btn-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Add Stock
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary strip -->
+    <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+      <div style="background:var(--white);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-xs)">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--emerald-500);display:inline-block"></span>
+        <span style="font-size:0.8rem;font-weight:600;color:var(--navy-800)">Good Stock</span>
+        <span style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--slate-400)">6 items</span>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-xs)">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--amber-500);display:inline-block"></span>
+        <span style="font-size:0.8rem;font-weight:600;color:var(--navy-800)">Medium Stock</span>
+        <span style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--slate-400)">2 items</span>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-xs)">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--rose-500);display:inline-block"></span>
+        <span style="font-size:0.8rem;font-weight:600;color:var(--navy-800)">Low Stock</span>
+        <span style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--slate-400)">2 items</span>
+      </div>
+    </div>
+
+    <!-- Warehouse Cards -->
+    <div class="warehouse-grid mb-24" id="warehouse-cards">
+      <!-- JS rendered -->
+    </div>
+
+    <!-- BST Demo -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          </svg>
+          BST Range Query Demo — WH-PUN-01 (Alphabetical Order)
+        </span>
+        <span style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--slate-400)">TreeMap.subMap() · O(log n)</span>
+      </div>
+      <div class="card-body" id="bst-demo">
+        <!-- JS rendered -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════
+       PAGE: DELIVERY TRACKING
+  ════════════════════════════════════════════ -->
+  <main class="page-content" id="page-tracking">
+
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">Delivery Tracking</h2>
+        <p class="page-subtitle">FIFO delivery pipeline — orders processed in confirmation sequence</p>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+      <div class="topbar-search" style="width:250px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" placeholder="Search deliveries…" id="tracking-search" />
+      </div>
+
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" data-filter="ALL">All</button>
+        <button class="btn btn-outline btn-sm" data-filter="IN_TRANSIT">In Transit</button>
+        <button class="btn btn-outline btn-sm" data-filter="DELIVERED">Delivered</button>
+        <button class="btn btn-outline btn-sm" data-filter="PROCESSING">Processing</button>
+        <button class="btn btn-outline btn-sm" data-filter="PREMIUM">Premium</button>
+        <button class="btn btn-outline btn-sm" data-filter="URGENT">Urgent</button>
+      </div>
+    </div>
+
+    <!-- Tracking Stats -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+      <div style="background:var(--white);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs)">
+        <div style="font-size:1.4rem;font-weight:700;font-family:'Syne',sans-serif;color:var(--navy-900)">7</div>
+        <div style="font-size:0.75rem;color:var(--slate-400);margin-top:2px">In Pipeline</div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs)">
+        <div style="font-size:1.4rem;font-weight:700;font-family:'Syne',sans-serif;color:var(--emerald-500)">3</div>
+        <div style="font-size:0.75rem;color:var(--slate-400);margin-top:2px">Delivered</div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs)">
+        <div style="font-size:1.4rem;font-weight:700;font-family:'Syne',sans-serif;color:var(--amber-500)">3</div>
+        <div style="font-size:0.75rem;color:var(--slate-400);margin-top:2px">In Transit</div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:14px 16px;box-shadow:var(--shadow-xs)">
+        <div style="font-size:1.4rem;font-weight:700;font-family:'Syne',sans-serif;color:var(--blue-500)">1</div>
+        <div style="font-size:0.75rem;color:var(--slate-400);margin-top:2px">Processing</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table class="data-table" id="tracking-table">
+        <thead>
+          <tr>
+            <th data-sort>Order ID <span class="sort-icon">↕</span></th>
+            <th data-sort>Customer <span class="sort-icon">↕</span></th>
+            <th data-sort>Product <span class="sort-icon">↕</span></th>
+            <th data-sort>From Warehouse <span class="sort-icon">↕</span></th>
+            <th data-sort>Destination <span class="sort-icon">↕</span></th>
+            <th data-sort>Cost <span class="sort-icon">↕</span></th>
+            <th>Priority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tracking-body">
+          <!-- JS rendered -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════
+       PAGE: ROUTE OPTIMIZATION
+  ════════════════════════════════════════════ -->
+  <main class="page-content" id="page-routes">
+
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">Route Optimization</h2>
+        <p class="page-subtitle">Dijkstra's algorithm · O((V+E) log V) · Adjacency list graph</p>
+      </div>
+    </div>
+
+    <div class="grid-7-5">
+
+      <!-- Canvas -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            City Network Graph
+          </span>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select class="form-control" id="route-src" style="width:130px;padding:5px 30px 5px 10px;font-size:0.8rem">
+              <!-- JS populated -->
+            </select>
+            <span style="font-size:0.75rem;color:var(--slate-400)">→</span>
+            <select class="form-control" id="route-dest" style="width:130px;padding:5px 30px 5px 10px;font-size:0.8rem">
+              <!-- JS populated -->
+            </select>
+            <button id="run-dijkstra" class="btn btn-amber btn-sm">Run</button>
+          </div>
+        </div>
+        <div class="card-body" style="padding:0">
+          <div class="route-container">
+            <canvas class="route-canvas" id="route-canvas"></canvas>
+          </div>
+          <div style="padding:14px 20px;border-top:1px solid var(--slate-100);display:flex;gap:16px;flex-wrap:wrap">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#10b981"></div>
+              <span>Source</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#f43f5e"></div>
+              <span>Destination</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#f59e0b"></div>
+              <span>Shortest Path</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#162443"></div>
+              <span>Unvisited</span>
+            </div>
+            <div class="legend-item" style="margin-left:auto">
+              <span style="font-family:'DM Mono',monospace;font-size:0.72px">Edge weights = transport cost units</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dijkstra Results -->
+      <div class="card" style="overflow:auto">
+        <div class="card-header">
+          <span class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+            Algorithm Output
+          </span>
+        </div>
+        <div class="card-body" style="background:var(--navy-950);border-radius:0 0 var(--radius-lg) var(--radius-lg);min-height:420px" id="route-info">
+          <p style="color:var(--slate-400);font-size:0.82rem">Select source and destination to run Dijkstra's algorithm.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Complexity card -->
+    <div class="card" style="margin-top:20px">
+      <div class="card-header">
+        <span class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+          </svg>
+          Time Complexity Analysis
+        </span>
+      </div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+          <div style="background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:14px">
+            <div style="font-size:0.7rem;font-weight:600;color:var(--slate-400);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">HashMap</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.95rem;font-weight:600;color:var(--navy-800)">O(1)</div>
+            <div style="font-size:0.75rem;color:var(--slate-400);margin-top:4px">Customer / Warehouse lookup</div>
+          </div>
+          <div style="background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:14px">
+            <div style="font-size:0.7rem;font-weight:600;color:var(--slate-400);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Priority Queue</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.95rem;font-weight:600;color:var(--navy-800)">O(log n)</div>
+            <div style="font-size:0.75rem;color:var(--slate-400);margin-top:4px">Order insert / extract-max</div>
+          </div>
+          <div style="background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:14px">
+            <div style="font-size:0.7rem;font-weight:600;color:var(--slate-400);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">TreeMap (BST)</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.95rem;font-weight:600;color:var(--navy-800)">O(log n)</div>
+            <div style="font-size:0.75rem;color:var(--slate-400);margin-top:4px">Inventory lookup / insert</div>
+          </div>
+          <div style="background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:14px">
+            <div style="font-size:0.7rem;font-weight:600;color:var(--slate-400);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Dijkstra's</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.95rem;font-weight:600;color:var(--amber-500)">(V+E) log V</div>
+            <div style="font-size:0.75rem;color:var(--slate-400);margin-top:4px">Shortest path per order</div>
+          </div>
+          <div style="background:var(--slate-50);border:1px solid var(--slate-100);border-radius:var(--radius-md);padding:14px">
+            <div style="font-size:0.7rem;font-weight:600;color:var(--slate-400);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">LinkedList Queue</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.95rem;font-weight:600;color:var(--navy-800)">O(1)</div>
+            <div style="font-size:0.75rem;color:var(--slate-400);margin-top:4px">Delivery FIFO pipeline</div>
+          </div>
+          <div style="background:var(--navy-900);border:1px solid var(--navy-800);border-radius:var(--radius-md);padding:14px">
+            <div style="font-size:0.7rem;font-weight:600;color:var(--navy-500);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Overall</div>
+            <div style="font-family:'DM Mono',monospace;font-size:0.88rem;font-weight:600;color:var(--amber-400)">W·(V+E)·log V</div>
+            <div style="font-size:0.75rem;color:var(--navy-500);margin-top:4px">per order processing run</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</div><!-- /main-wrapper -->
+<div id="customer-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Add Customer</h3>
+    <input type="text" id="newCustomerName" placeholder="Customer Name">
+    <input type="text" id="newCustomerCity" placeholder="City">
+    <button onclick="addCustomer()">Save</button>
+    <button onclick="closeCustomerModal()">Cancel</button>
+  </div>
+</div>
+
+<div id="product-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h3>Add Product</h3>
+    <input type="text" id="newProductName" placeholder="Product Name">
+    <button onclick="addProduct()">Save</button>
+    <button onclick="closeProductModal()">Cancel</button>
+  </div>
+</div>
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Scripts — order matters -->
+<script th:src="@{/js/data.js}"   src="../static/js/data.js"></script>
+<script th:src="@{/js/pages.js}"  src="../static/js/pages.js"></script>
+<script th:src="@{/js/app.js}"    src="../static/js/app.js"></script>
+
+</body>
+</html>
