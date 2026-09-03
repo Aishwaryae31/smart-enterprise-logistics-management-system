@@ -410,7 +410,7 @@ Planned improvements include:
 
 The main dashboard provides an overview of orders, delivery costs, warehouse stock, and recent logistics activity.
 
-![SELMS Dashboard](screenshots/dashboard.png)
+![SELMS Dashboard](screenshots/homepage.png)
 
 ---
 
@@ -428,7 +428,7 @@ Orders can be created with different priority levels. The system processes order
 
 PREMIUM > URGENT > NORMAL
 
-![Place New Order](screenshots/place-order.png)
+![Place New Order](screenshots/order.png)
 
 ---
 
@@ -436,7 +436,7 @@ PREMIUM > URGENT > NORMAL
 
 The route optimization module represents the logistics network as a graph and uses Dijkstra's Algorithm to calculate the shortest delivery route.
 
-![Route Optimization](screenshots/route-optimization.png)
+![Route Optimization](screenshots/route.png)
 
 ---
 
@@ -444,7 +444,7 @@ The route optimization module represents the logistics network as a graph and us
 
 The delivery tracking module manages shipments through a FIFO-based processing pipeline and provides real-time order status information.
 
-![Delivery Tracking](screenshots/delivery-tracking.png)
+![Delivery Tracking](screenshots/tracking.png)
 
 ## 📄 License
 
