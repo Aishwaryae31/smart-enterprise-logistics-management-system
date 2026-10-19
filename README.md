@@ -1,4 +1,4 @@
-
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Aishwaryae31/smart-enterprise-logistics-management-system)
 # Smart Enterprise Logistics & Order Processing System (SELMS)
 
 > An enterprise logistics management platform built with Java and Spring Boot to optimize order processing, warehouse allocation, inventory management, and delivery route optimization using Data Structures and Algorithms.
